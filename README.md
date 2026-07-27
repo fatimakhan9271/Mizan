@@ -56,8 +56,9 @@ company's questionnaire answers and produces a structured, risk-ranked gap analy
 first-draft policy documents — in one call, returned as strict JSON so the frontend can render it
 as a real dashboard rather than a wall of AI text.
 
-**Model used:** Claude (`claude-sonnet-4-5`) via the Anthropic Messages API, called server-side
-from `/api/analyze` so the API key never reaches the browser.
+**Model used:** `openai/gpt-oss-120b` via the Groq API (OpenAI-compatible chat completions
+endpoint), called server-side from `/api/analyze` so the API key never reaches the browser. Groq
+was chosen for inference speed — the full gap analysis returns in a couple of seconds.
 
 **What makes it more than a wrapper:** the system prompt embeds condensed, paraphrased summaries
 of four real regulatory frameworks (the draft Personal Data Protection Bill, SBP's Enterprise
@@ -115,7 +116,7 @@ drafted_documents[] (title, content) — no prose, no markdown fences.
 
 - **Framework:** Next.js 14 (App Router), React 18
 - **Styling:** Tailwind CSS, custom design tokens (no default UI kit)
-- **AI model:** Claude (`claude-sonnet-4-5`), Anthropic Messages API, called server-side
+- **AI model:** `openai/gpt-oss-120b` via the Groq API, called server-side
 - **Document generation:** [`docx`](https://www.npmjs.com/package/docx) npm package, generating
   real `.docx` files server-side on demand
 - **Hosting:** Vercel
@@ -126,13 +127,27 @@ drafted_documents[] (title, content) — no prose, no markdown fences.
 
 ## f. Screenshots
 
-**[Add 3+ screenshots here before submitting — see checklist below]**
+### Main screen
 
-Suggested shots:
-1. The landing page hero.
-2. A question step in the assessment wizard.
-3. The results dashboard with the compliance score and gap list.
-4. A drafted policy document download in action.
+<img width="1920" height="1080" alt="main page" src="https://github.com/user-attachments/assets/cea79783-0e6a-40fb-a920-48dd4358dca4" />
+
+The hero page introducing the problem and the "Start your assessment" call to action.
+
+### Question screen
+
+<img width="1020" height="1070" alt="questionare" src="https://github.com/user-attachments/assets/4b551da3-eb42-49fb-8bf2-903db5a1646b" />
+
+One of the four onboarding sections (business profile, data practices, existing controls, or
+third parties) mid-way through the questionnaire.
+
+### Result screen
+
+<img width="1076" height="885" alt="results -1" src="https://github.com/user-attachments/assets/5ccd5fd7-bb6c-43ec-91d0-8e2a93805174" />
+<img width="1256" height="896" alt="results - 2" src="https://github.com/user-attachments/assets/8938dea3-e74e-4f33-8a6f-b8b228d4c703" />
+
+
+The compliance score, high-risk gap count, applicable frameworks, the risk-ranked gap list, and
+the drafted policy documents ready for download.
 
 ## g. How to run the project
 
@@ -143,7 +158,7 @@ git clone <your-repo-url>
 cd mizan
 npm install
 cp .env.example .env.local
-# edit .env.local and add your own ANTHROPIC_API_KEY from https://console.anthropic.com
+# edit .env.local and add your own GROQ_API_KEY from https://console.groq.com
 npm run dev
 ```
 
@@ -154,7 +169,7 @@ Open [http://localhost:3000](http://localhost:3000).
 1. Push this repo to your own **public** GitHub repository.
 2. Go to [vercel.com](https://vercel.com), click **New Project**, and import the repo.
 3. In the project's **Environment Variables** settings, add:
-   - `ANTHROPIC_API_KEY` = your own Anthropic API key
+   - `GROQ_API_KEY` = your own Groq API key
 4. Deploy. Vercel will detect Next.js automatically — no build configuration needed.
 5. Copy the live URL Vercel gives you into section **b** of this README.
 
@@ -165,9 +180,9 @@ and in Vercel's environment variable settings in production.
 
 ### Pre-submission checklist
 
-- [ ] `ANTHROPIC_API_KEY` added in Vercel, not committed anywhere in the repo
+- [ ] `GROQ_API_KEY` added in Vercel, not committed anywhere in the repo
 - [ ] Live URL added to section (b) above and tested in an incognito window
 - [ ] Repo set to **Public** and opened in an incognito window to confirm it doesn't ask for login
-- [ ] At least 3 screenshots added to section (f)
-- [ ] Ran through the full flow once on the live URL: landing page → assessment → report →
+- [ ] Screenshots added under all three headings in section (f)
+- [ ] Ran through the full flow once on the live URL: main screen → questions → result →
       docx download
