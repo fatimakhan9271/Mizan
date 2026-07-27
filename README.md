@@ -29,7 +29,7 @@ It's built for:
 
 ## b. Live URL
 
-**[Add your deployed Vercel URL here after deployment — e.g. https://mizan-yourname.vercel.app]**
+https://mizan-olive.vercel.app/
 
 ## c. Features
 
